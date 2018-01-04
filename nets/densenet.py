@@ -64,6 +64,59 @@ def densenet(images, num_classes=1001, is_training=False,
             ##########################
             # Put your code here.
             ##########################
+            
+            scope = 'conv1'
+            net = slim.conv2d(images, 16, [3, 3], scope = scope )
+            end_points[scope] = net
+            
+            scope = 'block1'
+            net = block(net, 6, growth, scope = scope )
+            nd_points[scope] = net
+            
+            scope = 'conv2'
+            net = slim.conv2d(net, 16, [1,1])
+            end_points[scope] = net
+            
+            scope = 'avgpool1'
+            net = slim.avg_pool2s(net, [3,3], stride = 2, scope = scope)
+            nd_points[scope] = net
+            
+            scope = 'block2'
+            net = block(net, 12, growth, scope = scope )
+            nd_points[scope] = net
+            
+            scope = 'conv3'
+            net = slim.conv2d(net, 16, [1,1])
+            end_points[scope] = net
+            
+            scope = 'avgpool2'
+            net = slim.avg_pool2s(net, [2,2], stride = 2, scope = scope)
+            nd_points[scope] = net
+            
+            scope = 'block3'
+            net = block(net, 24, growth, scope = scope )
+            nd_points[scope] = net
+            
+            scope = 'conv4'
+            net = slim.conv2d(net, 16, [1,1])
+            end_points[scope] = net
+            
+            scope = 'avgpool3'
+            net = slim.avg_pool2s(net, [2,2], stride = 2, scope = scope)
+            nd_points[scope] = net
+            
+            scope = 'block4'
+            net = block(net, 16, growth, scope = scope )
+            nd_points[scope] = net
+            
+            scope = 'avgpool4'
+            net = slim.avg_pool2s(net, [7,7], stride = 2, scope = scope)
+            nd_points[scope] = net
+            
+            net = slim.avg_pool2d(net, net.shape[1:3])
+            biases_initializer = tf.constant_initializer(0.1)
+            net = slim.conv2d(net, NUM_CLASSES, [1,1], biases_initializer = biases_initializer )
+            logits = tf.squeeze(net)
 
     return logits, end_points
 
