@@ -71,47 +71,44 @@ def densenet(images, num_classes=1001, is_training=False,
             
             scope = 'block1'
             net = block(net, 6, growth, scope = scope )
-            nd_points[scope] = net
+            end_points[scope] = net
             
-            scope = 'conv2'
-            net = slim.conv2d(net, 16, [1,1])
+            scope = 'compress1'
+            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool1'
-            net = slim.avg_pool2s(net, [3,3], stride = 2, scope = scope)
-            nd_points[scope] = net
+            net = slim.avg_pool2d(net, [2,2], stride = 2, scope = scope)
+            end_points[scope] = net
             
             scope = 'block2'
             net = block(net, 12, growth, scope = scope )
-            nd_points[scope] = net
+            end_points[scope] = net
             
-            scope = 'conv3'
-            net = slim.conv2d(net, 16, [1,1])
+            scope = 'compress2'
+            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool2'
-            net = slim.avg_pool2s(net, [2,2], stride = 2, scope = scope)
-            nd_points[scope] = net
+            net = slim.avg_pool2d(net, [2,2], stride = 2, scope = scope)
+            end_points[scope] = net
             
             scope = 'block3'
             net = block(net, 24, growth, scope = scope )
-            nd_points[scope] = net
+            end_points[scope] = net
             
-            scope = 'conv4'
-            net = slim.conv2d(net, 16, [1,1])
+            scope = 'compress3'
+            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool3'
-            net = slim.avg_pool2s(net, [2,2], stride = 2, scope = scope)
-            nd_points[scope] = net
+            net = slim.avg_pool2d(net, [2,2], stride = 2, scope = scope)
+            end_points[scope] = net
             
             scope = 'block4'
             net = block(net, 16, growth, scope = scope )
-            nd_points[scope] = net
-            
-            scope = 'avgpool4'
-            net = slim.avg_pool2s(net, [7,7], stride = 2, scope = scope)
-            nd_points[scope] = net
+            end_points[scope] = net
+ 
             
             net = slim.avg_pool2d(net, net.shape[1:3])
             biases_initializer = tf.constant_initializer(0.1)
