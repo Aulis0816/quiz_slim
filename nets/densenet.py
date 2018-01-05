@@ -74,7 +74,7 @@ def densenet(images, num_classes=15, is_training=False,
             end_points[scope] = net
             
             scope = 'compress1'
-            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
+            net = bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool1'
@@ -86,7 +86,7 @@ def densenet(images, num_classes=15, is_training=False,
             end_points[scope] = net
             
             scope = 'compress2'
-            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
+            net = bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool2'
@@ -98,7 +98,7 @@ def densenet(images, num_classes=15, is_training=False,
             end_points[scope] = net
             
             scope = 'compress3'
-            net = slim.bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
+            net = bn_act_conv_drp(net, reduce_dim(net), [1, 1],  scope = scope)
             end_points[scope] = net
             
             scope = 'avgpool3'
