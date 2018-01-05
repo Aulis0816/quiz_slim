@@ -17,7 +17,7 @@ def parse_args(check=True):
     parser.add_argument('--train_dir', type=str)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--optimizer', type=str, default='rmsprop')
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=8)
 
     # eval
     parser.add_argument('--dataset_split_name', type=str, default='validation')
@@ -28,8 +28,8 @@ def parse_args(check=True):
     return FLAGS, unparsed
 
 
-train_cmd = 'python3 ./train_image_classifier.py  --dataset_name={dataset_name} --dataset_dir={dataset_dir} --model_name={model_name} --train_dir={train_dir} --learning_rate={learning_rate} --optimizer={optimizer} --batch_size=16'
-eval_cmd = 'python3 ./eval_image_classifier.py --dataset_name={dataset_name} --dataset_dir={dataset_dir} --dataset_split_name={dataset_split_name} --model_name={model_name} --checkpoint_path={checkpoint_path}  --eval_dir={eval_dir} --batch_size=32  --max_num_batches={max_num_batches}'
+train_cmd = 'python3 ./train_image_classifier.py  --dataset_name={dataset_name} --dataset_dir={dataset_dir} --model_name={model_name} --train_dir={train_dir} --learning_rate={learning_rate} --optimizer={optimizer} --batch_size={batch_size}'
+eval_cmd = 'python3 ./eval_image_classifier.py --dataset_name={dataset_name} --dataset_dir={dataset_dir} --dataset_split_name={dataset_split_name} --model_name={model_name} --checkpoint_path={checkpoint_path}  --eval_dir={eval_dir} --batch_size={batch_size}  --max_num_batches={max_num_batches}'
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
